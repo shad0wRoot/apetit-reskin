@@ -1,0 +1,33 @@
+# This is an example Caddyfile that shows how to setup the skin
+
+<your url> {
+        root * <your path>
+        file_server
+
+        handle /skin/* {
+                root * <your path>
+                file_server
+        }
+
+        # Override an existing stylesheet
+        handle /css/cwcalendar.min.css {
+                file_server
+                try_files /skin/skin.css
+        }
+
+        # Override an existing script
+        handle /js/mytabs.min.js {
+                file_server
+                try_files /skin/skin.js
+        }
+
+        handle /css/* {
+                file_server
+                try_files /skin/empty.css
+        }
+
+        # Forward all other requests to the backend
+        handle {
+                reverse_proxy <your original url>
+        }
+}
